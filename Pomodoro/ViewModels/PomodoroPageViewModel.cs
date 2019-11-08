@@ -30,8 +30,10 @@ namespace Pomodoro.ViewModels
 
         private void InitializeTimer()
         {
-            timer = new Timer();
-            timer.Interval = 1000;
+            timer = new Timer
+            {
+                Interval = 1000
+            };
             timer.Elapsed += Timer_Elapsed;
 
         }
