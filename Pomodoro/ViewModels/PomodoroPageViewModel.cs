@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels
@@ -12,6 +14,18 @@ namespace Pomodoro.ViewModels
         private int breakDuration;
         private bool toggleShowNumber = true;
         private TimeSpan ellapsed;
+        private string dynamicTextColor = "DarkSlateGray";
+
+        public string DynamicTextColor
+        {
+            get { return dynamicTextColor; }
+            set
+            {
+                dynamicTextColor = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public TimeSpan Ellapsed
         {
@@ -23,14 +37,21 @@ namespace Pomodoro.ViewModels
             }
         }
 
+
+        public ICommand Open { get; }
+
         public ICommand StartOfPauseCommand { get; set; }
 
-        public PomodoroPageViewModel()
+
+
+        public PomodoroPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
+            
             InitializeTimer();
             LoadConfiguredValues();
-            IsRunning = true;
+            IsInWork = true;
             StartOfPauseCommand = new Command(StartOfPauseCommandExecute);
+            
         }
 
         private void LoadConfiguredValues()
@@ -63,16 +84,20 @@ namespace Pomodoro.ViewModels
                 }
             }
             
-            if (IsRunning && !IsInBreak && (int)Ellapsed.TotalSeconds >= pomodoroDuration * 60)
+            if (IsRunning && IsInWork && !IsInBreak && (int)Ellapsed.TotalSeconds >= pomodoroDuration * 60)
             {
                 IsInBreak = true;
+                IsInWork = false;
                 Ellapsed = TimeSpan.Zero;
+                StopTimer();
             }
 
-            if (IsRunning && IsInBreak && (int)Ellapsed.TotalSeconds >= breakDuration * 60)
+            if (IsRunning && IsInBreak && !IsInWork && (int)Ellapsed.TotalSeconds >= breakDuration * 60)
             {
                 IsInBreak = false;
+                IsInWork = true;
                 Ellapsed = TimeSpan.Zero;
+                StopTimer();
             }
         }
 
@@ -80,6 +105,13 @@ namespace Pomodoro.ViewModels
         {
             timer.Start();
             IsRunning = true;
+            if (IsInBreak)
+            {
+                DynamicTextColor = "DarkGreen";
+            } else if (IsInWork)
+            {
+                DynamicTextColor = "DarkRed";
+            }
 
         }
 
@@ -87,6 +119,7 @@ namespace Pomodoro.ViewModels
         {
             timer.Stop();
             IsRunning = false;
+            DynamicTextColor = "DarkSlateGray";
         }
 
         private bool isRunning;
@@ -107,18 +140,60 @@ namespace Pomodoro.ViewModels
         {
             get { return isInBreak; }
             set
-            { isInBreak = value;
+            {
+                isInBreak = value;
                 OnPropertyChanged();
             }
         }
 
-        private void StartOfPauseCommandExecute()
+
+        private bool isInWork;
+
+        public bool IsInWork
         {
+            get { return isInWork; }
+            set
+            {
+                isInWork = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+        private async Task StartOfPauseCommandExecute()
+        {
+            
+
             if (IsRunning)
             {
-                StopTimer();
-            } else
+                if (IsInWork)
+                {
+                    var result = await Dialogs.ConfirmAsync(new ConfirmConfig
+                    {
+                        Message = "¿Seguro quieres detener tu ciclo de trabajo? Esto reiniciará tu temporizador a cero.",
+                        OkText = "Parar",
+                        CancelText = "¡Quiero seguir!"
+                    });
+                    if (result)
+                    {
+                        Ellapsed = TimeSpan.Zero;
+                        StopTimer();
+                    }
+                }
+                else if (IsInBreak)
+                {
+                    Dialogs.Alert("No puedes detener un ciclo de descanso, aprovéchalo mientras tengas tiempo.");
+                }
+                
+            }
+            else
             {
+                if (!IsInWork && !IsInBreak)
+                {
+                    IsInWork = true;
+                }
                 StartTimer();
             }
         }

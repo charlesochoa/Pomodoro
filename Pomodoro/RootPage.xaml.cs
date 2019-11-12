@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using Pomodoro.ViewModels;
 using Pomodoro.Views;
 using Xamarin.Forms;
@@ -16,37 +17,23 @@ namespace Pomodoro
         public RootPage()
         {
             InitializeComponent();
+            this.BindingContext = new RootPageViewModel(UserDialogs.Instance);
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToPomodoro", (a) =>
             {
-                Detail = new NavigationPage(new PomodoroPage());
+                Detail = new NavigationPage(new PomodoroPage(UserDialogs.Instance));
                 IsPresented = false;
 
             });
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToConfiguration", (a) =>
             {
-                Detail = new NavigationPage(new ConfigurationPage());
+                Detail = new NavigationPage(new ConfigurationPage(UserDialogs.Instance));
                 IsPresented = false;
 
             });
 
         }
 
-        //private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        //{
-        //    var item = e.SelectedItem as RootPageMenuItem;
-        //    if (item == null)
-        //        return;
-
-
-        //    var page = (Page)Activator.CreateInstance(item.TargetType);
-        //    page.Title = item.Title;
-
-        //    Detail = new NavigationPage(page);
-        //    IsPresented = false;
-
-        //    //MasterPage.ListView.SelectedItem = null;
-        //}
     }
 }

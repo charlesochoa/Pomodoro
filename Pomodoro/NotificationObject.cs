@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Acr.UserDialogs;
 
 namespace Pomodoro
 {
@@ -12,8 +13,13 @@ namespace Pomodoro
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public NotificationObject()
+        protected IUserDialogs Dialogs { get; }
+
+
+        public NotificationObject(IUserDialogs dialogs)
         {
+            this.Dialogs = dialogs;
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Acr.UserDialogs;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels
@@ -31,7 +32,7 @@ namespace Pomodoro.ViewModels
             }
         }
 
-        public RootPageViewModel()
+        public RootPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
             MenuItems = new ObservableCollection<string>
             {

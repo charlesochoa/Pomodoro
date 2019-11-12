@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels
@@ -58,7 +59,7 @@ namespace Pomodoro.ViewModels
         public ICommand SaveCommand { get; set; }
 
 
-        public ConfigurationPageViewModel()
+        public ConfigurationPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
             LoadPomodoroDurations();
             LoadBreakDurations();
