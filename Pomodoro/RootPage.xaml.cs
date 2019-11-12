@@ -16,16 +16,17 @@ namespace Pomodoro
         public RootPage()
         {
             InitializeComponent();
-            MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToConfiguration", (a) =>
-            {
-                Detail = new NavigationPage(new ConfigurationPage());
-                IsPresented = false;
-
-            });
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToPomodoro", (a) =>
             {
                 Detail = new NavigationPage(new PomodoroPage());
+                IsPresented = false;
+
+            });
+
+            MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToConfiguration", (a) =>
+            {
+                Detail = new NavigationPage(new ConfigurationPage());
                 IsPresented = false;
 
             });
@@ -37,6 +38,7 @@ namespace Pomodoro
         //    var item = e.SelectedItem as RootPageMenuItem;
         //    if (item == null)
         //        return;
+
 
         //    var page = (Page)Activator.CreateInstance(item.TargetType);
         //    page.Title = item.Title;

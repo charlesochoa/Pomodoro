@@ -33,10 +33,12 @@ namespace Pomodoro.ViewModels
 
         public RootPageViewModel()
         {
-            MenuItems = new ObservableCollection<string>();
-            MenuItems.Add("Pomodoro");
-            MenuItems.Add("Historial");
-            MenuItems.Add("Configuración");
+            MenuItems = new ObservableCollection<string>
+            {
+                "Pomodoro",
+                "Historial",
+                "Configuración"
+            };
 
             PropertyChanged += RootPageViewModel_PropertyChanged;
 

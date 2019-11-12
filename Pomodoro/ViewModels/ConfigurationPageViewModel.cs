@@ -7,10 +7,6 @@ namespace Pomodoro.ViewModels
 {
     public class ConfigurationPageViewModel : NotificationObject
     {
-
-        private const string PomodoroDuration = "PomodoroDuration";
-        private const string BreakDuration = "BreakDuration";
-
         private ObservableCollection<int> pomodoroDurations;
 
         public ObservableCollection<int> PomodoroDurations
@@ -101,24 +97,24 @@ namespace Pomodoro.ViewModels
 
         private void LoadConfigurations()
         {
-            if(Application.Current.Properties.ContainsKey(PomodoroDuration))
+            if(Application.Current.Properties.ContainsKey(Literals.PomodoroDuration))
             {
-                SelectedPomodoroDuration = (int)Application.Current.Properties[PomodoroDuration];
+                SelectedPomodoroDuration = (int)Application.Current.Properties[Literals.PomodoroDuration];
             }
 
              
-            if (Application.Current.Properties.ContainsKey(BreakDuration))
+            if (Application.Current.Properties.ContainsKey(Literals.BreakDuration))
             {
-                SelectedBreakDuration = (int)Application.Current.Properties[BreakDuration];
+                SelectedBreakDuration = (int)Application.Current.Properties[Literals.BreakDuration];
             }
 
         }
 
         private async void SaveCommandExecute()
         {
-            Application.Current.Properties[PomodoroDuration] = SelectedPomodoroDuration;
+            Application.Current.Properties[Literals.PomodoroDuration] = SelectedPomodoroDuration;
 
-            Application.Current.Properties[BreakDuration] = SelectedBreakDuration;
+            Application.Current.Properties[Literals.BreakDuration] = SelectedBreakDuration;
             await Application.Current.SavePropertiesAsync();
         }
     }

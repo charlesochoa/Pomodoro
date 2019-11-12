@@ -8,6 +8,9 @@ namespace Pomodoro.ViewModels
     public class PomodoroPageViewModel : NotificationObject
     {
         private Timer timer;
+        private int pomodoroDuration;
+        private int breakDuration;
+        private bool toggleShowNumber = true;
         private TimeSpan ellapsed;
 
         public TimeSpan Ellapsed
@@ -24,8 +27,16 @@ namespace Pomodoro.ViewModels
 
         public PomodoroPageViewModel()
         {
-            StartOfPauseCommand = new Command(StartOfPauseCommandExecute);
             InitializeTimer();
+            LoadConfiguredValues();
+            IsRunning = true;
+            StartOfPauseCommand = new Command(StartOfPauseCommandExecute);
+        }
+
+        private void LoadConfiguredValues()
+        {
+            pomodoroDuration = (int) Application.Current.Properties[Literals.PomodoroDuration];
+            breakDuration = (int)Application.Current.Properties[Literals.BreakDuration];
         }
 
         private void InitializeTimer()
@@ -40,7 +51,29 @@ namespace Pomodoro.ViewModels
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(1));
+            if (IsRunning)
+            {
+                Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(17));
+            } else
+            {
+                Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(0));
+                if (toggleShowNumber)
+                {
+
+                }
+            }
+            
+            if (IsRunning && !IsInBreak && (int)Ellapsed.TotalSeconds >= pomodoroDuration * 60)
+            {
+                IsInBreak = true;
+                Ellapsed = TimeSpan.Zero;
+            }
+
+            if (IsRunning && IsInBreak && (int)Ellapsed.TotalSeconds >= breakDuration * 60)
+            {
+                IsInBreak = false;
+                Ellapsed = TimeSpan.Zero;
+            }
         }
 
         private void StartTimer()
@@ -65,6 +98,17 @@ namespace Pomodoro.ViewModels
             {
                 isRunning = value;
                 OnPropertyChanged(); 
+            }
+        }
+
+        private bool isInBreak;
+
+        public bool IsInBreak
+        {
+            get { return isInBreak; }
+            set
+            { isInBreak = value;
+                OnPropertyChanged();
             }
         }
 
