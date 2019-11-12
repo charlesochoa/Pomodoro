@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
@@ -46,17 +48,17 @@ namespace Pomodoro.ViewModels
 
         public PomodoroPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
-            
+
             InitializeTimer();
             LoadConfiguredValues();
             IsInWork = true;
-            StartOfPauseCommand = new Command(StartOfPauseCommandExecute);
-            
+            StartOfPauseCommand = new Command(async () => await StartOfPauseCommandExecute());
+
         }
 
         private void LoadConfiguredValues()
         {
-            pomodoroDuration = (int) Application.Current.Properties[Literals.PomodoroDuration];
+            pomodoroDuration = (int)Application.Current.Properties[Literals.PomodoroDuration];
             breakDuration = (int)Application.Current.Properties[Literals.BreakDuration];
         }
 
@@ -70,7 +72,7 @@ namespace Pomodoro.ViewModels
 
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private async Task Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (IsRunning)
             {
@@ -83,13 +85,14 @@ namespace Pomodoro.ViewModels
 
                 }
             }
-            
+
             if (IsRunning && IsInWork && !IsInBreak && (int)Ellapsed.TotalSeconds >= pomodoroDuration * 60)
             {
                 IsInBreak = true;
                 IsInWork = false;
                 Ellapsed = TimeSpan.Zero;
                 StopTimer();
+                await SavePomodoroAsync();
             }
 
             if (IsRunning && IsInBreak && !IsInWork && (int)Ellapsed.TotalSeconds >= breakDuration * 60)
@@ -99,6 +102,22 @@ namespace Pomodoro.ViewModels
                 Ellapsed = TimeSpan.Zero;
                 StopTimer();
             }
+        }
+
+        private async Task SavePomodoroAsync()
+        {
+            List<DateTime> history;
+            if(Application.Current.Properties.ContainsKey(Literals.History))
+            {
+            
+                history = Application.Current.Properties[Literals.History] as List<DateTime>;
+                
+            }
+            else
+            {
+                history = new List<DateTime>();
+            }
+            history.Add(DateTime.Now);
         }
 
         private void StartTimer()
