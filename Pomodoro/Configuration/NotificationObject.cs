@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Acr.UserDialogs;
 
-namespace Pomodoro
+namespace Pomodoro.Configuration
 {
     public abstract class NotificationObject : INotifyPropertyChanged
     {

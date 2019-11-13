@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Pomodoro
+namespace Pomodoro.Configuration
 {
     internal class Literals
     {

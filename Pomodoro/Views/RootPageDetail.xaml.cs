@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Pomodoro
+namespace Pomodoro.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RootPageDetail : ContentPage

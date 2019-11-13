@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using Newtonsoft.Json;
+using Pomodoro.Configuration;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels
@@ -51,7 +52,7 @@ namespace Pomodoro.ViewModels
             var result = await Dialogs.ConfirmAsync(new ConfirmConfig
             {
                 Message = "¿Seguro quieres eliminar tu historial de Ciclos Completados? Esta operación es permanente.",
-                OkText = "¡Venga!",
+                OkText = "Seguro",
                 CancelText = "Mejor no"
             });
             if (result)

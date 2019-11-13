@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Acr.UserDialogs;
+using Pomodoro.Configuration;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels

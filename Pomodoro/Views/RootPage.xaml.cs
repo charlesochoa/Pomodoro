@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Pomodoro.ViewModels;
-using Pomodoro.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Pomodoro
+namespace Pomodoro.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RootPage : MasterDetailPage
