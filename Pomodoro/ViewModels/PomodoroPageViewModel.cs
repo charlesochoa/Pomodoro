@@ -18,6 +18,29 @@ namespace Pomodoro.ViewModels
         private bool toggleShowNumber = true;
         private TimeSpan ellapsed;
         private string dynamicTextColor = "DarkSlateGray";
+        private int durationP;
+
+        private int durationB;
+
+        public int DurationP
+        {
+            get { return durationP; }
+            set
+            {
+                durationP = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int DurationB
+        {
+            get { return durationB; }
+            set
+            {
+                durationB = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string DynamicTextColor
         {
@@ -53,6 +76,8 @@ namespace Pomodoro.ViewModels
             InitializeTimerAsync();
             LoadConfiguredValues();
             IsInWork = true;
+            DurationP = pomodoroDuration * 60;
+            DurationB = breakDuration * 60;
             StartOfPauseCommand = new Command(async () => await StartOfPauseCommandExecute());
 
         }

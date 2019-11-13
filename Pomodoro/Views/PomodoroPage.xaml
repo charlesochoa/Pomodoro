@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:Pomodoro.Controls" 
              x:Class="Pomodoro.Views.PomodoroPage" Title="Pomodoro">
     <Grid>
         <Grid.Triggers>
@@ -33,7 +33,8 @@
                TextColor="DarkGreen"
                Text="¡Vamos por un descanso!"
                IsVisible="{Binding IsInBreak}" />
-
+        <controls:CircularProgress Grid.Row="1" IsVisible="{Binding IsInWork}" Progress="{Binding Ellapsed.TotalSeconds}" Max="{Binding DurationP}"/>
+        <controls:CircularProgress Grid.Row="1" IsVisible="{Binding IsInBreak}" Progress="{Binding Ellapsed.TotalSeconds}" Max="{Binding DurationB}"/>
         <Label Grid.Row="1" VerticalOptions="Center"
                HorizontalOptions="Center"
                FontSize="Large"

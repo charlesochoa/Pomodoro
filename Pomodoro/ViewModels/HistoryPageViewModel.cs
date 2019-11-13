@@ -57,6 +57,8 @@ namespace Pomodoro.ViewModels
             if (result)
             {
                 Application.Current.Properties.Remove(Literals.History);
+                Pomodoros = null;
+                LoadHistory();
 
                 await Application.Current.SavePropertiesAsync();
             }
