@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="Pomodoro.Views.PomodoroPage">
+             x:Class="Pomodoro.Views.PomodoroPage" Title="Pomodoro">
     <Grid>
         <Grid.Triggers>
             <DataTrigger TargetType="Grid" Binding="{Binding IsRunning}" Value="False" >
@@ -15,22 +15,21 @@
             </DataTrigger>
         </Grid.Triggers>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height=".3*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".4*" />
         </Grid.RowDefinitions>
         
         <Label VerticalOptions="Center"
                HorizontalOptions="Center"
-               FontSize="Small"
+               FontSize="Medium"
                TextColor="DarkRed"
                Text="¡Vamos con el ciclo de trabajo!"
                IsVisible="{Binding IsInWork}" />
 
         <Label VerticalOptions="Center"
                HorizontalOptions="Center"
-               FontSize="Small"
+               FontSize="Medium"
                TextColor="DarkGreen"
                Text="¡Vamos por un descanso!"
                IsVisible="{Binding IsInBreak}" />
@@ -43,6 +42,7 @@
         <Button Grid.Row="2"
                 Text="Iniciar/Pausar"
                 TextColor="DarkSlateGray"
+                BackgroundColor="LightGray"
                 Command="{Binding StartOfPauseCommand}" />
     </Grid>
 </ContentPage>

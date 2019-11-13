@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using Acr.UserDialogs;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace Pomodoro.ViewModels
@@ -49,7 +50,7 @@ namespace Pomodoro.ViewModels
         public PomodoroPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
 
-            InitializeTimer();
+            InitializeTimerAsync();
             LoadConfiguredValues();
             IsInWork = true;
             StartOfPauseCommand = new Command(async () => await StartOfPauseCommandExecute());
@@ -62,13 +63,13 @@ namespace Pomodoro.ViewModels
             breakDuration = (int)Application.Current.Properties[Literals.BreakDuration];
         }
 
-        private void InitializeTimer()
+        private void InitializeTimerAsync()
         {
             timer = new Timer
             {
                 Interval = 1000
             };
-            timer.Elapsed += Timer_Elapsed;
+            timer.Elapsed += async (sender, e) => await Timer_Elapsed(sender, e);
 
         }
 
@@ -109,8 +110,9 @@ namespace Pomodoro.ViewModels
             List<DateTime> history;
             if(Application.Current.Properties.ContainsKey(Literals.History))
             {
-            
-                history = Application.Current.Properties[Literals.History] as List<DateTime>;
+
+                var json = Application.Current.Properties[Literals.History].ToString();
+                history = JsonConvert.DeserializeObject<List<DateTime>>(json);
                 
             }
             else
@@ -118,6 +120,11 @@ namespace Pomodoro.ViewModels
                 history = new List<DateTime>();
             }
             history.Add(DateTime.Now);
+
+            var serializedObject = JsonConvert.SerializeObject(history);
+            Application.Current.Properties[Literals.History] = serializedObject;
+
+            await Application.Current.SavePropertiesAsync();
         }
 
         private void StartTimer()

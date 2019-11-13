@@ -33,6 +33,14 @@ namespace Pomodoro
 
             });
 
+
+            MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToHistory", (a) =>
+            {
+                Detail = new NavigationPage(new HistoryPage(UserDialogs.Instance));
+                IsPresented = false;
+
+            });
+
         }
 
     }

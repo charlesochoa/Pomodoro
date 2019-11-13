@@ -57,6 +57,7 @@ namespace Pomodoro.ViewModels
         }
 
         public ICommand SaveCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
 
         public ConfigurationPageViewModel(IUserDialogs dialogs) : base(dialogs)
@@ -111,6 +112,18 @@ namespace Pomodoro.ViewModels
 
         }
 
+
+
+        private async void ResetCommandExecute()
+        {
+            Application.Current.Properties[Literals.PomodoroDuration] = 25;
+
+            Application.Current.Properties[Literals.BreakDuration] = 5;
+
+            await Application.Current.SavePropertiesAsync();
+        }
+
+
         private async void SaveCommandExecute()
         {
             Application.Current.Properties[Literals.PomodoroDuration] = SelectedPomodoroDuration;
@@ -118,5 +131,6 @@ namespace Pomodoro.ViewModels
             Application.Current.Properties[Literals.BreakDuration] = SelectedBreakDuration;
             await Application.Current.SavePropertiesAsync();
         }
+
     }
 }

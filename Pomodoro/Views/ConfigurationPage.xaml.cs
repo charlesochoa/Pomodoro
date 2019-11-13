@@ -11,7 +11,7 @@ namespace Pomodoro.Views
         public ConfigurationPage(Acr.UserDialogs.IUserDialogs instance)
         {
             InitializeComponent();
-            this.BindingContext = new ConfigurationPageViewModel(UserDialogs.Instance);
+            this.BindingContext = new ConfigurationPageViewModel(instance);
         }
     }
 }

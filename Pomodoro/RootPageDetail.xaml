@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pomodoro.RootPageDetail" Title="Detail">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pomodoro.RootPageDetail">
     <StackLayout Padding="10">
         <Label Text="Bienvenido a nuestra aplicación pomodoro, donde podrás registrar tus ciclos de trabajo efectivo. Ve al menú principal para ver las opciones." />
     </StackLayout>

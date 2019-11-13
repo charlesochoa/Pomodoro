@@ -50,12 +50,17 @@ namespace Pomodoro.ViewModels
         {
             if (e.PropertyName == nameof(SelectedMenuItem))
             {
-                if(SelectedMenuItem == "Configuración")
+                switch (SelectedMenuItem)
                 {
-                    MessagingCenter.Send(this, "GoToConfiguration");
-                } else if (SelectedMenuItem == "Pomodoro")
-                {
-                    MessagingCenter.Send(this, "GoToPomodoro");
+                    case "Configuración":
+                        MessagingCenter.Send(this, "GoToConfiguration");
+                        break;
+                    case "Historial":
+                        MessagingCenter.Send(this, "GoToHistory");
+                        break;
+                    case "Pomodoro":
+                        MessagingCenter.Send(this, "GoToPomodoro");
+                        break;
                 }
             }
         }

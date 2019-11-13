@@ -1,14 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pomodoro.RootPage" xmlns:pages="clr-namespace:Pomodoro" >
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  x:Class="Pomodoro.RootPage"
+                  xmlns:pages="clr-namespace:Pomodoro"
+                  NavigationPage.HasNavigationBar="False" 
+                  NavigationPage.HasBackButton="False">
     <MasterDetailPage.Master>
-        <ContentPage Title="Master">
+        <ContentPage Title="Master" >
             <ListView ItemsSource="{Binding MenuItems}" SeparatorVisibility="None" BackgroundColor="WhiteSmoke"
-                      SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}"/>
+                      SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="25">
+                            <Label Text="{Binding .}" TextColor="DarkSlateGray" VerticalOptions="Center" Padding="12"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ContentPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage>
-            <x:Arguments>
+            <x:Arguments >
                 <pages:RootPageDetail />
             </x:Arguments>
         </NavigationPage>

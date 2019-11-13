@@ -11,7 +11,7 @@ namespace Pomodoro.Views
         public PomodoroPage(Acr.UserDialogs.IUserDialogs instance)
         {
             InitializeComponent();
-            this.BindingContext = new PomodoroPageViewModel(UserDialogs.Instance);
+            this.BindingContext = new PomodoroPageViewModel(instance);
         }
     }
 }
