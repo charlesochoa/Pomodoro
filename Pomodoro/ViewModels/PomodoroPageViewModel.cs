@@ -103,7 +103,7 @@ namespace Pomodoro.ViewModels
         {
             if (IsRunning)
             {
-                Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(17));
+                Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(1));
             } else
             {
                 Ellapsed = Ellapsed.Add(TimeSpan.FromSeconds(0));
