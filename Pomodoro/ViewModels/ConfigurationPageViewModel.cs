@@ -40,8 +40,18 @@ namespace Pomodoro.ViewModels
             get { return selectedPomodoroDuration; }
             set
             {
-                selectedPomodoroDuration = value;
-                OnPropertyChanged();
+                var oldV = 0;
+                if (value != selectedPomodoroDuration)
+                {
+                    oldV = selectedPomodoroDuration;
+                    selectedPomodoroDuration = value;
+                    OnPropertyChanged();
+
+                    if (oldV != 0)
+                    {
+                        SaveCommandExecute();
+                    }
+                }
             }
         }
 
@@ -52,8 +62,17 @@ namespace Pomodoro.ViewModels
             get { return selectedBreakDuration; }
             set
             {
-                selectedBreakDuration = value;
-                OnPropertyChanged();
+                var oldV = 0;
+                if (value != selectedBreakDuration)
+                {
+                    oldV = selectedBreakDuration;
+                    selectedBreakDuration = value;
+                    OnPropertyChanged();
+                }
+                if (oldV != 0)
+                {
+                    SaveCommandExecute();
+                }
             }
         }
 
@@ -63,8 +82,8 @@ namespace Pomodoro.ViewModels
 
         public ConfigurationPageViewModel(IUserDialogs dialogs) : base(dialogs)
         {
-            LoadPomodoroDurations();
             LoadBreakDurations();
+            LoadPomodoroDurations();
             LoadConfigurations();
             SaveCommand = new Command(SaveCommandExecute);
         }
@@ -130,6 +149,7 @@ namespace Pomodoro.ViewModels
             Application.Current.Properties[Literals.PomodoroDuration] = SelectedPomodoroDuration;
 
             Application.Current.Properties[Literals.BreakDuration] = SelectedBreakDuration;
+
             await Application.Current.SavePropertiesAsync();
         }
 

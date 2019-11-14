@@ -17,17 +17,24 @@ namespace Pomodoro.Views
         {
             InitializeComponent();
             this.BindingContext = new RootPageViewModel(UserDialogs.Instance);
+            Color navColor = Color.FromHex( "#143963");
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToPomodoro", (a) =>
             {
-                Detail = new NavigationPage(new PomodoroPage(UserDialogs.Instance));
+                Detail = new NavigationPage(new PomodoroPage(UserDialogs.Instance))
+                {
+                    BarBackgroundColor = navColor
+                };
                 IsPresented = false;
 
             });
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToConfiguration", (a) =>
             {
-                Detail = new NavigationPage(new ConfigurationPage(UserDialogs.Instance));
+                Detail = new NavigationPage(new ConfigurationPage(UserDialogs.Instance))
+                {
+                    BarBackgroundColor = navColor
+                };
                 IsPresented = false;
 
             });
@@ -35,10 +42,14 @@ namespace Pomodoro.Views
 
             MessagingCenter.Subscribe<RootPageViewModel>(this, "GoToHistory", (a) =>
             {
-                Detail = new NavigationPage(new HistoryPage(UserDialogs.Instance));
+                Detail = new NavigationPage(new HistoryPage(UserDialogs.Instance))
+                {
+                    BarBackgroundColor = navColor,
+                };
                 IsPresented = false;
 
             });
+            
 
         }
 

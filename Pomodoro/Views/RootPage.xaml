@@ -20,7 +20,7 @@
         </ContentPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage>
+        <NavigationPage BarBackgroundColor="#143963">
             <x:Arguments >
                 <pages:RootPageDetail />
             </x:Arguments>
